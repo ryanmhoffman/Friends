@@ -16,12 +16,16 @@ public class MainActivity extends AppCompatActivity {
 	private FloatingActionButton fab;
 	private RecyclerView recyclerView;
 	private RecyclerView.LayoutManager layoutManager;
+	private RecyclerViewAdapter adapter;
+	private ContactRetriever retriever;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+		retriever = new ContactRetriever(this);
 
 		// Boilerplate code to initialize my Views.
 		// This just shortens my onCreate()
@@ -56,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
 		recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
 		layoutManager = new LinearLayoutManager(this);
 		recyclerView.setLayoutManager(layoutManager);
+		adapter = new RecyclerViewAdapter(retriever.getContacts());
 
 		// Initializes the FloatingActionButton
 		fab = (FloatingActionButton) findViewById(R.id.fab);
