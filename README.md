@@ -1,2 +1,2 @@
 # Friends
-Android app to replace the stock contacts app.
+Another contact app for Android to replace the stock one. 
