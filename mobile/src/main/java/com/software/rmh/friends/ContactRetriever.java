@@ -1,10 +1,14 @@
 package com.software.rmh.friends;
 
-import android.content.ContentResolver;
+import android.app.LoaderManager;
 import android.content.Context;
+import android.content.CursorLoader;
+import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -12,7 +16,7 @@ import java.util.ArrayList;
  * Class was created by Ryan Hoffman on 8/2/16. Retrieves all contact info from storage on the device.
  */
 
-public class ContactRetriever {
+public class ContactRetriever implements LoaderManager.LoaderCallbacks<Cursor> {
 
 	private Context context;
 
@@ -23,7 +27,7 @@ public class ContactRetriever {
 	private String PHONE_CONTACT_ID = ContactsContract.CommonDataKinds.Phone.CONTACT_ID;
 	private String HAS_PHONE_NUMBER = ContactsContract.Contacts.HAS_PHONE_NUMBER;
 	private Uri CONTACTS_CONTENT_URI = ContactsContract.Contacts.CONTENT_URI;
-	private ContentResolver contentResolver;
+	private CursorLoader cursorLoader;
 
 	public ContactRetriever(Context context){
 		this.context = context;
@@ -32,38 +36,56 @@ public class ContactRetriever {
 	// Return all of the contacts as an Array of Contact objects.
 	public ArrayList<Contact> getContacts(){
 		ArrayList<Contact> contacts = new ArrayList<>();
-		String[] projection = new String[]{CONTACT_ID, DISPLAY_NAME, HAS_PHONE_NUMBER};
 
-		contentResolver = context.getContentResolver();
 
-		Cursor cursor = contentResolver.query(CONTACTS_CONTENT_URI, projection, null, null, null);
 
-		while(cursor.moveToNext()){
-			Contact contact = getContact(cursor);
-			contacts.add(contact);
-		}
 		return contacts;
 	}
 
+
+
+	/**
+	 * Retrieves a contact name, id, and number(s) from the cursor and stores it as a Contact.
+	 *
+	 * The Contact is then returned and added to the ArrayList contacts.
+	 */
 	private Contact getContact(Cursor cursor){
 		String id = cursor.getString(cursor.getColumnIndex(CONTACT_ID));
 		String name = cursor.getString(cursor.getColumnIndex(DISPLAY_NAME));
 
 		Contact contact = new Contact(name, getPhoneNumber(cursor, id));
+		Log.d("Contact", contact.getNAME() + " " + contact.getNUMBER());
 		return contact;
 	}
 
+	// Retrieves the phone number from the system using a cursor.
 	private String getPhoneNumber(Cursor cursor, String id){
 		String phoneNumber = "";
-		int hasNumber = Integer.parseInt(cursor.getString(cursor.getColumnIndex(HAS_PHONE_NUMBER)));
+		/*int hasNumber = Integer.parseInt(cursor.getString(cursor.getColumnIndex(HAS_PHONE_NUMBER)));
 		if(hasNumber > 0){
 			Cursor contactCursor = contentResolver.query(PHONE_CONTENT_URI, null, PHONE_CONTACT_ID + " = ?", new String[]{id}, null);
 			while(contactCursor.moveToNext()){
 				phoneNumber = contactCursor.getString(cursor.getColumnIndex(PHONE_NUMBER));
 			}
 			contactCursor.close();
-		}
+		}*/
 		return phoneNumber;
 	}
 
+	@Override
+	public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+		String[] projection = new String[]{CONTACT_ID, DISPLAY_NAME, HAS_PHONE_NUMBER};
+		cursorLoader = new CursorLoader(context, CONTACTS_CONTENT_URI, projection, null, null, null);
+		return cursorLoader;
+	}
+
+	@Override
+	public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+
+	}
+
+	@Override
+	public void onLoaderReset(Loader<Cursor> loader) {
+
+	}
 }

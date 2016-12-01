@@ -11,6 +11,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
 	private FloatingActionButton fab;
@@ -18,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
 	private RecyclerView.LayoutManager layoutManager;
 	private RecyclerViewAdapter adapter;
 	private ContactRetriever retriever;
+	private ArrayList<Contact> dummyContacts = new ArrayList<>();
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,11 +30,18 @@ public class MainActivity extends AppCompatActivity {
 
 		retriever = new ContactRetriever(this);
 
-		// Boilerplate code to initialize my Views.
-		// This just shortens my onCreate()
+		makeDummyContacts();
+
 		initViews();
 
     }
+
+	private void makeDummyContacts(){
+		for(int i = 0; i < 15; i++) {
+			Contact contact = new Contact(i + " Ryan Hoffman", i + "330-453-6061");
+			dummyContacts.add(contact);
+		}
+	}
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -60,7 +70,8 @@ public class MainActivity extends AppCompatActivity {
 		recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
 		layoutManager = new LinearLayoutManager(this);
 		recyclerView.setLayoutManager(layoutManager);
-		adapter = new RecyclerViewAdapter(retriever.getContacts());
+		adapter = new RecyclerViewAdapter(dummyContacts);
+		recyclerView.setAdapter(adapter);
 
 		// Initializes the FloatingActionButton
 		fab = (FloatingActionButton) findViewById(R.id.fab);
