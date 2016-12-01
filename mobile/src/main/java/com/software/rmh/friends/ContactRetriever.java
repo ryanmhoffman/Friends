@@ -23,7 +23,7 @@ public class ContactRetriever {
 	private String PHONE_CONTACT_ID = ContactsContract.CommonDataKinds.Phone.CONTACT_ID;
 	private String HAS_PHONE_NUMBER = ContactsContract.Contacts.HAS_PHONE_NUMBER;
 	private Uri CONTACTS_CONTENT_URI = ContactsContract.Contacts.CONTENT_URI;
-	private ContentResolver contentResolver = context.getContentResolver();
+	private ContentResolver contentResolver;
 
 	public ContactRetriever(Context context){
 		this.context = context;
@@ -33,6 +33,8 @@ public class ContactRetriever {
 	public ArrayList<Contact> getContacts(){
 		ArrayList<Contact> contacts = new ArrayList<>();
 		String[] projection = new String[]{CONTACT_ID, DISPLAY_NAME, HAS_PHONE_NUMBER};
+
+		contentResolver = context.getContentResolver();
 
 		Cursor cursor = contentResolver.query(CONTACTS_CONTENT_URI, projection, null, null, null);
 
@@ -51,7 +53,6 @@ public class ContactRetriever {
 		return contact;
 	}
 
-	// I had a line of documentation here...but the method declaration/name said it all.
 	private String getPhoneNumber(Cursor cursor, String id){
 		String phoneNumber = "";
 		int hasNumber = Integer.parseInt(cursor.getString(cursor.getColumnIndex(HAS_PHONE_NUMBER)));
