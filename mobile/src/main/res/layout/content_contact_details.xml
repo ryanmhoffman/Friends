@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/content_contact_details"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.software.rmh.friends.ContactDetails"
+    tools:showIn="@layout/activity_contact_details"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+
+</RelativeLayout>

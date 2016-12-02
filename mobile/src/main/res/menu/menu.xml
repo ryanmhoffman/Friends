@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menu_call"
+        android:icon="@android:drawable/ic_menu_call"
+        android:title="@string/call_button" />
+
+    <item
+        android:id="@+id/menu_text"
+        android:icon="@drawable/ic_action_name"
+        android:title="@string/message_button" />
+
+    <item
+        android:id="@+id/menu_star"
+        android:icon="@android:drawable/star_off"
+        android:title="@string/star_button" />
+
+    <item
+        android:id="@+id/menu_edit"
+        android:icon="@android:drawable/ic_menu_edit"
+        android:title="@string/edit_button" />
+
+</menu>

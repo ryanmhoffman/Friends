@@ -35,14 +35,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 		}
 	}
 
-	@Override
-	public void onBindViewHolder(RecyclerViewHolder holder, int position, List<Object> payloads) {
-		super.onBindViewHolder(holder, position, payloads);
-		if(contacts.get(position) != null){
-			holder.contactName.setText(contacts.get(position).getNAME());
-			holder.contactNumber.setText(contacts.get(position).getNUMBER());
-		}
-	}
+
 
 	@Override
 	public RecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -53,7 +46,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
 	@Override
 	public void onBindViewHolder(RecyclerViewHolder holder, int position) {
-
+		if(contacts.get(position) != null){
+			holder.contactName.setText(contacts.get(position).getNAME());
+			holder.contactNumber.setText(contacts.get(position).getNUMBER());
+		}
 	}
 
 	@Override
