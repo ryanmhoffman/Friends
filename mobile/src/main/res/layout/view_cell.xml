@@ -11,9 +11,9 @@
         android:layout_width="60dp"
         android:id="@+id/circleView"
         android:layout_margin="8dp"
-        app:cv_fillColor="@color/colorAccent"
+        app:cv_fillColor="@color/colorPrimaryDark"
         app:cv_strokeWidthSize="0"
-        app:cv_backgroundColorValue="@color/colorAccent"
+        app:cv_backgroundColorValue="@color/colorPrimaryDark"
         app:cv_subtitleText=" "
         app:cv_titleText=" "/>
 

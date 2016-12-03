@@ -23,6 +23,24 @@
             android:layout_height="match_parent"
             android:background="@color/colorSecondary"/>
 
+        <RelativeLayout
+            android:layout_height="match_parent"
+            android:layout_width="match_parent">
+
+            <com.github.pavlospt.CircleView
+                android:id="@+id/circleViewDetails"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_centerInParent="true"
+                app:cv_fillColor="@color/colorAccent"
+                app:cv_strokeWidthSize="0"
+                app:cv_backgroundColorValue="@color/colorAccent"
+                app:cv_subtitleText=" "
+                app:cv_titleText=" "/>
+
+        </RelativeLayout>
+
+
     </developer.shivam.library.CrescentoContainer>
 
 </RelativeLayout>
