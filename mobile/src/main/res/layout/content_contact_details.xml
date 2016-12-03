@@ -14,14 +14,14 @@
         android:id="@+id/crescentoContainer"
         android:layout_height="300dp"
         android:layout_width="match_parent"
-        android:elevation="20dp"
+        android:elevation="6dp"
         android:scaleType="centerCrop"
         attribute:curvature="50dp" >
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorAccent"/>
+            android:background="@color/colorSecondary"/>
 
     </developer.shivam.library.CrescentoContainer>
 

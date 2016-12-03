@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-		retriever = new ContactRetriever(this);
+		//retriever = new ContactRetriever(this);
 
 		makeDummyContacts();
 
