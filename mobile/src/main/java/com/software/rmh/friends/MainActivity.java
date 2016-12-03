@@ -1,9 +1,9 @@
 package com.software.rmh.friends;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -73,13 +73,16 @@ public class MainActivity extends AppCompatActivity {
 		adapter = new RecyclerViewAdapter(dummyContacts);
 		recyclerView.setAdapter(adapter);
 
+		DividerItemDecoration divider = new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL);
+		recyclerView.addItemDecoration(divider);
+
 		// Initializes the FloatingActionButton
 		fab = (FloatingActionButton) findViewById(R.id.fab);
 		fab.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				Intent intent = new Intent(MainActivity.this, ContactDetails.class);
-				startActivity(intent);
+				//Intent intent = new Intent(MainActivity.this, ContactDetails.class);
+				//startActivity(intent);
 			}
 		});
 	}

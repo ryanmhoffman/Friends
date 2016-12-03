@@ -14,7 +14,7 @@
         android:id="@+id/crescentoContainer"
         android:layout_height="300dp"
         android:layout_width="match_parent"
-        android:elevation="6dp"
+        android:elevation="4dp"
         android:scaleType="centerCrop"
         attribute:curvature="50dp" >
 

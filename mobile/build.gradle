@@ -33,4 +33,5 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.0-beta3'
     compile 'com.github.joaquimley:faboptions:1.0.1'
     compile 'com.github.developer-shivam:crescento:1.0.1'
+    compile 'com.github.pavlospt:circleview:1.3'
 }

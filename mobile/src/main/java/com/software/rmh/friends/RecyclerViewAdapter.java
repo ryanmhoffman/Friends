@@ -1,5 +1,6 @@
 package com.software.rmh.friends;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.List;
 /**
  * Custom Adapter created by Ryan Hoffman on 8/3/16.
  */
@@ -25,13 +25,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 		public TextView contactNumber;
 		public RecyclerViewHolder(View itemView) {
 			super(itemView);
+			itemView.setOnClickListener(this);
 			contactName = (TextView) itemView.findViewById(R.id.contactName);
 			contactNumber = (TextView) itemView.findViewById(R.id.contactNumber);
 		}
 
 		@Override
 		public void onClick(View v) {
-			// Do nothing for now.
+			// Open the ContactDetails screen
+			Intent intent = new Intent(v.getContext(), ContactDetails.class);
+			v.getContext().startActivity(intent);
 		}
 	}
 

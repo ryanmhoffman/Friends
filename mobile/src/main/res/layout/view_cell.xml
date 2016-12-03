@@ -1,24 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
+              android:orientation="horizontal"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:layout_marginStart="8dp"
-              android:layout_marginEnd="8dp">
+              android:background="?attr/selectableItemBackground" >
 
-    <TextView
-        android:id="@+id/contactName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:padding="8dp"
-        android:text="Ryan Hoffman"/>
+    <com.github.pavlospt.CircleView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_height="60dp"
+        android:layout_width="60dp"
+        android:id="@+id/circleView"
+        android:layout_margin="8dp"
+        app:cv_fillColor="@color/colorAccent"
+        app:cv_strokeWidthSize="0"
+        app:cv_backgroundColorValue="@color/colorAccent"
+        app:cv_subtitleText=" "
+        app:cv_titleText=" "/>
 
-    <TextView
-        android:id="@+id/contactNumber"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/textviews"
         android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:text="555-867-5309"/>
+        android:layout_width="wrap_content"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/contactName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:padding="8dp"
+            android:text="Ryan Hoffman"/>
+
+        <TextView
+            android:id="@+id/contactNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="555-867-5309"/>
+    </LinearLayout>
+
 
 </LinearLayout>
