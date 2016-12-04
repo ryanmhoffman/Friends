@@ -26,7 +26,7 @@ public class ContactDetails extends AppCompatActivity {
 
 		circleView = (TextView) findViewById(R.id.contentCircleView);
 
-		//setInitials(name);
+		setInitials(name);
 
 		FabOptions fab = (FabOptions) findViewById(R.id.fabOptions);
 		fab.setButtonsMenu(this, R.menu.menu);
@@ -60,8 +60,8 @@ public class ContactDetails extends AppCompatActivity {
 	private void setInitials(String name){
 		String nameParts[] = name.split(" ");
 		char firstInitial = nameParts[0].charAt(0);
-		char secondInitial = nameParts[1].charAt(1);
-		char thirdInitial = nameParts[2].charAt(2);
+		char secondInitial = nameParts[1].charAt(0);
+		char thirdInitial = nameParts[2].charAt(0);
 		String initials = "" + firstInitial + secondInitial + thirdInitial;
 		if(circleView == null){
 			Log.d("CircleView", "Why am I null?");

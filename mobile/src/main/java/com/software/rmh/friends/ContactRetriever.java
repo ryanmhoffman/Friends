@@ -1,14 +1,10 @@
 package com.software.rmh.friends;
 
-import android.app.LoaderManager;
+import android.content.ContentResolver;
 import android.content.Context;
-import android.content.CursorLoader;
-import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.util.Log;
+import android.os.AsyncTask;
 
 import java.util.ArrayList;
 
@@ -16,18 +12,10 @@ import java.util.ArrayList;
  * Class was created by Ryan Hoffman on 8/2/16. Retrieves all contact info from storage on the device.
  */
 
-public class ContactRetriever implements LoaderManager.LoaderCallbacks<Cursor> {
+public class ContactRetriever {
 
 	private Context context;
-
-	private String CONTACT_ID = ContactsContract.Contacts._ID;
-	private String DISPLAY_NAME = ContactsContract.Contacts.DISPLAY_NAME;
-	private String PHONE_NUMBER = ContactsContract.CommonDataKinds.Phone.NUMBER;
-	private Uri PHONE_CONTENT_URI = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
-	private String PHONE_CONTACT_ID = ContactsContract.CommonDataKinds.Phone.CONTACT_ID;
-	private String HAS_PHONE_NUMBER = ContactsContract.Contacts.HAS_PHONE_NUMBER;
-	private Uri CONTACTS_CONTENT_URI = ContactsContract.Contacts.CONTENT_URI;
-	private CursorLoader cursorLoader;
+	private ArrayList<Contact> contacts = new ArrayList<>();
 
 	public ContactRetriever(Context context){
 		this.context = context;
@@ -35,57 +23,68 @@ public class ContactRetriever implements LoaderManager.LoaderCallbacks<Cursor> {
 
 	// Return all of the contacts as an Array of Contact objects.
 	public ArrayList<Contact> getContacts(){
-		ArrayList<Contact> contacts = new ArrayList<>();
 
-
-
+		new ContactRetrieverTask().execute(this);
 		return contacts;
 	}
 
-
-
-	/**
-	 * Retrieves a contact name, id, and number(s) from the cursor and stores it as a Contact.
-	 *
-	 * The Contact is then returned and added to the ArrayList contacts.
-	 */
-	private Contact getContact(Cursor cursor){
-		String id = cursor.getString(cursor.getColumnIndex(CONTACT_ID));
-		String name = cursor.getString(cursor.getColumnIndex(DISPLAY_NAME));
-
-		Contact contact = new Contact(name, getPhoneNumber(cursor, id));
-		Log.d("Contact", contact.getNAME() + " " + contact.getNUMBER());
-		return contact;
+	private void setContacts(ArrayList<Contact> retrievedContacts){
+		contacts = retrievedContacts;
 	}
 
-	// Retrieves the phone number from the system using a cursor.
-	private String getPhoneNumber(Cursor cursor, String id){
-		String phoneNumber = "";
-		/*int hasNumber = Integer.parseInt(cursor.getString(cursor.getColumnIndex(HAS_PHONE_NUMBER)));
-		if(hasNumber > 0){
-			Cursor contactCursor = contentResolver.query(PHONE_CONTENT_URI, null, PHONE_CONTACT_ID + " = ?", new String[]{id}, null);
-			while(contactCursor.moveToNext()){
-				phoneNumber = contactCursor.getString(cursor.getColumnIndex(PHONE_NUMBER));
+	private class ContactRetrieverTask extends AsyncTask<ContactRetriever, Long, ArrayList<Contact>> {
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			// Do nothing
+		}
+
+		@Override
+		protected ArrayList<Contact> doInBackground(ContactRetriever... params) {
+			ArrayList<Contact> allContacts = new ArrayList<>();
+
+			ContentResolver resolver = context.getContentResolver();
+
+			Uri raw = Uri.parse("content://com.android.contacts/raw_contacts");
+			Uri data = Uri.parse("content://com.android.contacts/data");
+
+			Cursor cursor = resolver.query(raw, new String[]{"contact_id"}, null, null, null);
+
+			while(cursor.moveToNext()){
+
+				String contact_id = cursor.getString(0);
+
+				if(contact_id != null){
+
+					Cursor c = resolver.query(data, new String[]{"data1", "mimetype"}, "raw_contact_id=?", new String[]{contact_id}, null);
+					Contact contact = new Contact();
+
+					while(c.moveToNext()){
+
+						String data1 = c.getString(0);
+						String mimetype = c.getString(1);
+
+						if(mimetype.equals("vnd.android.cursor.item/phone_v2")){
+							contact.setNUMBER(data1);
+						} else if(mimetype.equals("vnd.android.cursor.item/name")){
+							contact.setNAME(data1);
+						}
+					}
+					allContacts.add(contact);
+					c.close();
+				}
 			}
-			contactCursor.close();
-		}*/
-		return phoneNumber;
-	}
+			cursor.close();
+			return allContacts;
+		}
 
-	@Override
-	public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-		String[] projection = new String[]{CONTACT_ID, DISPLAY_NAME, HAS_PHONE_NUMBER};
-		cursorLoader = new CursorLoader(context, CONTACTS_CONTENT_URI, projection, null, null, null);
-		return cursorLoader;
-	}
-
-	@Override
-	public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+		@Override
+		protected void onPostExecute(ArrayList<Contact> contacts) {
+			super.onPostExecute(contacts);
+			setContacts(contacts);
+		}
 
 	}
 
-	@Override
-	public void onLoaderReset(Loader<Cursor> loader) {
-
-	}
 }
