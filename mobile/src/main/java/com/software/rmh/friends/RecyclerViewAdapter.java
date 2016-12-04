@@ -1,6 +1,7 @@
 package com.software.rmh.friends;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,6 +35,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 		public void onClick(View v) {
 			// Open the ContactDetails screen
 			Intent intent = new Intent(v.getContext(), ContactDetails.class);
+			Bundle bundle = new Bundle();
+			bundle.putString("NAME", contactName.getText().toString());
+			bundle.putString("NUMBER", contactNumber.getText().toString());
+			intent.putExtras(bundle);
 			v.getContext().startActivity(intent);
 		}
 	}
