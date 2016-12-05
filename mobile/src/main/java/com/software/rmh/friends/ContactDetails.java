@@ -3,7 +3,6 @@ package com.software.rmh.friends;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -59,15 +58,31 @@ public class ContactDetails extends AppCompatActivity {
 	// Extract the initials from the string and set them as the title in the CircleView
 	private void setInitials(String name){
 		String nameParts[] = name.split(" ");
+		int len = nameParts.length;
+
+
 		char firstInitial = nameParts[0].charAt(0);
-		char secondInitial = nameParts[1].charAt(0);
-		char thirdInitial = nameParts[2].charAt(0);
-		String initials = "" + firstInitial + secondInitial + thirdInitial;
-		if(circleView == null){
-			Log.d("CircleView", "Why am I null?");
+
+		String initials;
+
+		if(len == 3){
+			char secondInitial = nameParts[1].charAt(0);
+			char thirdInitial = nameParts[2].charAt(0);
+			initials = "" + firstInitial + secondInitial + thirdInitial;
+			circleView.setText(initials);
+		} else if(len == 2){
+			char secondInitial = nameParts[1].charAt(0);
+			initials = "" + firstInitial + secondInitial;
+			circleView.setText(initials);
 		} else {
+			if(name.length() <= 5){
+				initials = name;
+			} else {
+				initials = "" + firstInitial;
+			}
 			circleView.setText(initials);
 		}
+
 	}
 
 }

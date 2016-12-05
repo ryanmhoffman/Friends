@@ -28,9 +28,9 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-		//retriever = new ContactRetriever(this);
+		retriever = new ContactRetriever(this);
 
-		makeDummyContacts();
+		//makeDummyContacts();
 
 		initViews();
 
@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
 		recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
 		layoutManager = new LinearLayoutManager(this);
 		recyclerView.setLayoutManager(layoutManager);
-		adapter = new RecyclerViewAdapter(dummyContacts);
+		adapter = new RecyclerViewAdapter(retriever.getContacts());
 		recyclerView.setAdapter(adapter);
 
 		DividerItemDecoration divider = new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL);
