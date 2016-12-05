@@ -1,5 +1,7 @@
 package com.software.rmh.friends;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -22,7 +24,7 @@ public class ContactDetails extends AppCompatActivity {
 
 		// Retrieve the Extra data from the intent.
 		String name = getIntent().getStringExtra("NAME");
-		String number = getIntent().getStringExtra("NUMBER");
+		final String number = getIntent().getStringExtra("NUMBER");
 
 		circleView = (TextView) findViewById(R.id.contentCircleView);
 
@@ -36,7 +38,9 @@ public class ContactDetails extends AppCompatActivity {
 			public void onClick(View view) {
 				switch(view.getId()){
 					case R.id.menu_call:
-						Toast.makeText(ContactDetails.this, "Pressed Call", Toast.LENGTH_SHORT).show();
+						Intent call = new Intent(Intent.ACTION_DIAL);
+						call.setData(Uri.parse("tel:" + number));
+						startActivity(call);
 						break;
 					case R.id.menu_text:
 						Toast.makeText(ContactDetails.this, "Pressed Text", Toast.LENGTH_SHORT).show();

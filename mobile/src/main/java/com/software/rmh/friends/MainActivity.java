@@ -27,8 +27,6 @@ public class MainActivity extends AppCompatActivity {
 
 		retriever = new ContactRetriever(this);
 
-		//makeDummyContacts();
-
 		initViews();
 
     }

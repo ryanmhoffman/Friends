@@ -28,7 +28,8 @@
             android:layout_height="125dp"
             android:background="@drawable/shape_circle"
             android:layout_centerInParent="true"
-            android:gravity="center" />
+            android:gravity="center"
+            android:textSize="32sp"/>
 
     </developer.shivam.library.CrescentoContainer>
 
