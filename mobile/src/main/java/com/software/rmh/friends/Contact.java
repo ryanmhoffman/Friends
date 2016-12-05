@@ -19,6 +19,13 @@ public class Contact {
 		// Empty constructor, use with caution.
 	}
 
+	/**
+	 * Safer constructor due to the fact that it guarantees the variables will be set, so the getters can be called any
+	 * time without the worry that it will return a null value.
+	 *
+	 * @param name The name of the Contact
+	 * @param number the phone number of the Contact
+	 */
 	public Contact(String name, String number){
 		this.NAME = name;
 		this.NUMBER = number;

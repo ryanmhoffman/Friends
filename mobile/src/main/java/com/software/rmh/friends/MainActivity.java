@@ -11,8 +11,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import java.util.ArrayList;
-
 public class MainActivity extends AppCompatActivity {
 
 	private FloatingActionButton fab;
@@ -20,7 +18,6 @@ public class MainActivity extends AppCompatActivity {
 	private RecyclerView.LayoutManager layoutManager;
 	private RecyclerViewAdapter adapter;
 	private ContactRetriever retriever;
-	private ArrayList<Contact> dummyContacts = new ArrayList<>();
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,13 +32,6 @@ public class MainActivity extends AppCompatActivity {
 		initViews();
 
     }
-
-	private void makeDummyContacts(){
-		for(int i = 0; i < 15; i++) {
-			Contact contact = new Contact(i + " Ryan Hoffman", i + "330-453-6061");
-			dummyContacts.add(contact);
-		}
-	}
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -66,13 +56,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
 	private void initViews(){
-		// Initializes the RecyclerView
+		// Initializes the RecyclerView and sets the LayoutManager and Adapter.
 		recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
 		layoutManager = new LinearLayoutManager(this);
 		recyclerView.setLayoutManager(layoutManager);
 		adapter = new RecyclerViewAdapter(retriever.getContacts());
 		recyclerView.setAdapter(adapter);
 
+		// Add a divider between each row in the RecyclerView.
 		DividerItemDecoration divider = new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL);
 		recyclerView.addItemDecoration(divider);
 
@@ -81,8 +72,7 @@ public class MainActivity extends AppCompatActivity {
 		fab.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				//Intent intent = new Intent(MainActivity.this, ContactDetails.class);
-				//startActivity(intent);
+
 			}
 		});
 	}
