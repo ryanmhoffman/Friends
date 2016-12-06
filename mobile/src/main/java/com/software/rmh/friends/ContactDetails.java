@@ -13,7 +13,7 @@ import com.joaquimley.faboptions.FabOptions;
 
 public class ContactDetails extends AppCompatActivity {
 
-	private TextView circleView;
+	private TextView circleView, nameText;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +27,9 @@ public class ContactDetails extends AppCompatActivity {
 		final String number = getIntent().getStringExtra("NUMBER");
 
 		circleView = (TextView) findViewById(R.id.contentCircleView);
+		nameText = (TextView) findViewById(R.id.nameTextView);
 
+		nameText.setText(name);
 		setInitials(name);
 
 		FabOptions fab = (FabOptions) findViewById(R.id.fabOptions);

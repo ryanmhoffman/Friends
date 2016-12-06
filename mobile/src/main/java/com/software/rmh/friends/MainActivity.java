@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
 	private RecyclerView recyclerView;
 	private RecyclerView.LayoutManager layoutManager;
 	private RecyclerViewAdapter adapter;
-	private ContactRetriever retriever;
+	private DataRetriever retriever;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-		retriever = new ContactRetriever(this);
+		retriever = new DataRetriever(this);
 
 		initViews();
 
@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
 		recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
 		layoutManager = new LinearLayoutManager(this);
 		recyclerView.setLayoutManager(layoutManager);
-		adapter = new RecyclerViewAdapter(retriever.getContacts());
+		adapter = new RecyclerViewAdapter(retriever.retrieveContacts());
 		recyclerView.setAdapter(adapter);
 
 		// Add a divider between each row in the RecyclerView.
