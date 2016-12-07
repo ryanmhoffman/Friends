@@ -64,13 +64,15 @@ public class DataRetriever {
 		return contacts;
 	}
 
-	public String retrieveTexts(){
+	public String retrieveTexts(String number){
 		String message = "";
+		// Convert the phone number to digits only. ie if it's (330)555-1234 convert it to 3305551234
+		String rawNumber = number.replaceAll("[^0-9]", "");
 
 		Cursor cursor = null;
 		try {
 			// Initialize the cursor and run the query for the last received text message from the contact.
-			cursor = context.getContentResolver().query(Uri.parse("content://sms/inbox"), null, "address='3304173189'", null, "date desc limit 1");
+			cursor = context.getContentResolver().query(Uri.parse("content://sms/inbox"), null, "address='" + rawNumber + "'", null, "date desc limit 1");
 
 			// Start at 1.
 			cursor.moveToFirst();

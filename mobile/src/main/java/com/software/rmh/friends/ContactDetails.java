@@ -32,7 +32,7 @@ public class ContactDetails extends AppCompatActivity {
 		nameText.setText(name);
 
 		lastText = (TextView) findViewById(R.id.lastTextTV);
-		lastText.setText(new DataRetriever(this).retrieveTexts());
+		lastText.setText(new DataRetriever(this).retrieveTexts(number));
 
 		setInitials(name);
 
