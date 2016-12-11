@@ -1,8 +1,11 @@
 package com.software.rmh.friends;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -14,6 +17,7 @@ import com.joaquimley.faboptions.FabOptions;
 public class ContactDetails extends AppCompatActivity {
 
 	private TextView circleView, nameText, lastText;
+	private static final int MY_PERMISSIONS_REQUEST_CALL = 1;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -42,10 +46,21 @@ public class ContactDetails extends AppCompatActivity {
 		fab.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				switch(view.getId()){
+				switch(view.getId()) {
 					case R.id.menu_call:
-						Intent call = new Intent(Intent.ACTION_DIAL);
+						Intent call = new Intent(Intent.ACTION_CALL);
 						call.setData(Uri.parse("tel:" + number));
+						if(ActivityCompat.checkSelfPermission(ContactDetails.this, android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+							// TODO: Consider calling
+							//    ActivityCompat#requestPermissions
+							// here to request the missing permissions, and then overriding
+							//   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+							//                                          int[] grantResults)
+							// to handle the case where the user grants the permission. See the documentation
+							// for ActivityCompat#requestPermissions for more details.
+							ActivityCompat.requestPermissions(ContactDetails.this, new String[]{Manifest.permission.CALL_PHONE}, MY_PERMISSIONS_REQUEST_CALL);
+							return;
+						}
 						startActivity(call);
 						break;
 					case R.id.menu_text:
