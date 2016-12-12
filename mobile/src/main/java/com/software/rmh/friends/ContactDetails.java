@@ -58,6 +58,10 @@ public class ContactDetails extends AppCompatActivity {
 							//                                          int[] grantResults)
 							// to handle the case where the user grants the permission. See the documentation
 							// for ActivityCompat#requestPermissions for more details.
+							// I feel like adding all the permission code within the switch of the onClickListener is
+							// a bad idea. I need to find a new place to put it...
+							// A method call with the permission requested passed as an argument would probably
+							// be the most simple and reusable way to do it.
 							ActivityCompat.requestPermissions(ContactDetails.this, new String[]{Manifest.permission.CALL_PHONE}, MY_PERMISSIONS_REQUEST_CALL);
 							return;
 						}
