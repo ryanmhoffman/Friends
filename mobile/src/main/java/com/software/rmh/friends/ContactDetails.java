@@ -50,22 +50,9 @@ public class ContactDetails extends AppCompatActivity {
 					case R.id.menu_call:
 						Intent call = new Intent(Intent.ACTION_CALL);
 						call.setData(Uri.parse("tel:" + number));
-						if(ActivityCompat.checkSelfPermission(ContactDetails.this, android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-							// TODO: Consider calling
-							//    ActivityCompat#requestPermissions
-							// here to request the missing permissions, and then overriding
-							//   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-							//                                          int[] grantResults)
-							// to handle the case where the user grants the permission. See the documentation
-							// for ActivityCompat#requestPermissions for more details.
-							// I feel like adding all the permission code within the switch of the onClickListener is
-							// a bad idea. I need to find a new place to put it...
-							// A method call with the permission requested passed as an argument would probably
-							// be the most simple and reusable way to do it.
-							ActivityCompat.requestPermissions(ContactDetails.this, new String[]{Manifest.permission.CALL_PHONE}, MY_PERMISSIONS_REQUEST_CALL);
-							return;
-						}
-						startActivity(call);
+						requestPermission(Manifest.permission.CALL_PHONE);
+						//startActivity(call);
+						Toast.makeText(ContactDetails.this, "Pressed Call", Toast.LENGTH_SHORT).show();
 						break;
 					case R.id.menu_text:
 						Toast.makeText(ContactDetails.this, "Pressed Text", Toast.LENGTH_SHORT).show();
@@ -84,6 +71,23 @@ public class ContactDetails extends AppCompatActivity {
 
 		// Enable the back button
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+	}
+
+	private void requestPermission(String permission){
+		if(ActivityCompat.checkSelfPermission(ContactDetails.this, permission) != PackageManager.PERMISSION_GRANTED) {
+			// TODO: Consider calling
+			//    ActivityCompat#requestPermissions
+			// here to request the missing permissions, and then overriding
+			//   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+			//                                          int[] grantResults)
+			// to handle the case where the user grants the permission. See the documentation
+			// for ActivityCompat#requestPermissions for more details.
+			// I feel like adding all the permission code within the switch of the onClickListener is
+			// a bad idea. I need to find a new place to put it...
+			// A method call with the permission requested passed as an argument would probably
+			// be the most simple and reusable way to do it.
+			ActivityCompat.requestPermissions(ContactDetails.this, new String[]{permission}, MY_PERMISSIONS_REQUEST_CALL);
+		}
 	}
 
 	/**
