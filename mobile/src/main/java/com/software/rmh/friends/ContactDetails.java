@@ -1,11 +1,8 @@
 package com.software.rmh.friends;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -48,14 +45,14 @@ public class ContactDetails extends AppCompatActivity {
 			public void onClick(View view) {
 				switch(view.getId()) {
 					case R.id.menu_call:
-						Intent call = new Intent(Intent.ACTION_CALL);
+						Intent call = new Intent(Intent.ACTION_DIAL);
 						call.setData(Uri.parse("tel:" + number));
-						requestPermission(Manifest.permission.CALL_PHONE);
-						//startActivity(call);
-						Toast.makeText(ContactDetails.this, "Pressed Call", Toast.LENGTH_SHORT).show();
+						startActivity(call);
 						break;
 					case R.id.menu_text:
-						Toast.makeText(ContactDetails.this, "Pressed Text", Toast.LENGTH_SHORT).show();
+						Intent text = new Intent(Intent.ACTION_VIEW);
+						text.setData(Uri.parse("sms:" + number));
+						startActivity(text);
 						break;
 					case R.id.menu_star:
 						Toast.makeText(ContactDetails.this, "Pressed Favorite", Toast.LENGTH_SHORT).show();
@@ -71,23 +68,6 @@ public class ContactDetails extends AppCompatActivity {
 
 		// Enable the back button
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-	}
-
-	private void requestPermission(String permission){
-		if(ActivityCompat.checkSelfPermission(ContactDetails.this, permission) != PackageManager.PERMISSION_GRANTED) {
-			// TODO: Consider calling
-			//    ActivityCompat#requestPermissions
-			// here to request the missing permissions, and then overriding
-			//   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-			//                                          int[] grantResults)
-			// to handle the case where the user grants the permission. See the documentation
-			// for ActivityCompat#requestPermissions for more details.
-			// I feel like adding all the permission code within the switch of the onClickListener is
-			// a bad idea. I need to find a new place to put it...
-			// A method call with the permission requested passed as an argument would probably
-			// be the most simple and reusable way to do it.
-			ActivityCompat.requestPermissions(ContactDetails.this, new String[]{permission}, MY_PERMISSIONS_REQUEST_CALL);
-		}
 	}
 
 	/**
