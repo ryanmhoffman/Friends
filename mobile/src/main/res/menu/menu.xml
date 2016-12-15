@@ -11,14 +11,4 @@
         android:icon="@drawable/ic_action_message"
         android:title="@string/message_button" />
 
-    <item
-        android:id="@+id/menu_star"
-        android:icon="@drawable/ic_action_favorite"
-        android:title="@string/star_button" />
-
-    <item
-        android:id="@+id/menu_edit"
-        android:icon="@drawable/ic_action_edit"
-        android:title="@string/edit_button" />
-
 </menu>

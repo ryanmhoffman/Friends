@@ -7,14 +7,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.joaquimley.faboptions.FabOptions;
 
 public class ContactDetails extends AppCompatActivity {
 
 	private TextView circleView, nameText, lastText;
-	private static final int MY_PERMISSIONS_REQUEST_CALL = 1;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -53,12 +51,6 @@ public class ContactDetails extends AppCompatActivity {
 						Intent text = new Intent(Intent.ACTION_VIEW);
 						text.setData(Uri.parse("sms:" + number));
 						startActivity(text);
-						break;
-					case R.id.menu_star:
-						Toast.makeText(ContactDetails.this, "Pressed Favorite", Toast.LENGTH_SHORT).show();
-						break;
-					case R.id.menu_edit:
-						Toast.makeText(ContactDetails.this, "Pressed Edit", Toast.LENGTH_SHORT).show();
 						break;
 					default:
 						// No default case needed.
