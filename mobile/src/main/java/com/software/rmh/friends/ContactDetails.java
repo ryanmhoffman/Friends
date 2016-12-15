@@ -5,6 +5,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.transition.Transition;
+import android.transition.TransitionInflater;
 import android.view.View;
 import android.widget.TextView;
 
@@ -20,6 +22,8 @@ public class ContactDetails extends AppCompatActivity {
 		setContentView(R.layout.activity_contact_details);
 		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
+
+		setWindowTransitionAnimations();
 
 		// Retrieve the Extra data from the intent.
 		String name = getIntent().getStringExtra("NAME");
@@ -99,6 +103,11 @@ public class ContactDetails extends AppCompatActivity {
 			circleView.setText(initials);
 		}
 
+	}
+
+	private void setWindowTransitionAnimations(){
+		Transition fade = TransitionInflater.from(this).inflateTransition(R.transition.activity_fade);
+		getWindow().setEnterTransition(fade);
 	}
 
 }

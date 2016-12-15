@@ -7,6 +7,8 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.transition.Transition;
+import android.transition.TransitionInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+		setWindowTransitionAnimations();
 
 		retriever = new DataRetriever(this);
 
@@ -73,5 +77,10 @@ public class MainActivity extends AppCompatActivity {
 
 			}
 		});
+	}
+
+	private void setWindowTransitionAnimations(){
+		Transition slide = TransitionInflater.from(this).inflateTransition(R.transition.activity_slide);
+		getWindow().setExitTransition(slide);
 	}
 }
