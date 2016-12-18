@@ -8,6 +8,8 @@ import android.support.v7.widget.Toolbar;
 import android.transition.Transition;
 import android.transition.TransitionInflater;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import com.joaquimley.faboptions.FabOptions;
@@ -15,6 +17,7 @@ import com.joaquimley.faboptions.FabOptions;
 public class ContactDetails extends AppCompatActivity {
 
 	private TextView circleView, nameText, lastText;
+	private FabOptions fab;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +42,8 @@ public class ContactDetails extends AppCompatActivity {
 
 		setInitials(name);
 
-		FabOptions fab = (FabOptions) findViewById(R.id.fabOptions);
+		fab = (FabOptions) findViewById(R.id.fabOptions);
+		animateFAB();
 		fab.setButtonsMenu(this, R.menu.menu);
 
 		fab.setOnClickListener(new View.OnClickListener() {
@@ -108,6 +112,13 @@ public class ContactDetails extends AppCompatActivity {
 	private void setWindowTransitionAnimations(){
 		Transition fade = TransitionInflater.from(this).inflateTransition(R.transition.activity_fade);
 		getWindow().setEnterTransition(fade);
+	}
+
+	private void animateFAB(){
+		if(fab != null){
+			Animation animation = AnimationUtils.loadAnimation(this, R.anim.expand_in);
+			fab.startAnimation(animation);
+		}
 	}
 
 }
