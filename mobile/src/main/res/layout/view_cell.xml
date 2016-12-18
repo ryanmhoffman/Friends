@@ -5,12 +5,12 @@
               android:layout_height="wrap_content"
               android:background="?attr/selectableItemBackground" >
 
-    <View
+    <ImageView
         android:layout_height="60dp"
         android:layout_width="60dp"
         android:id="@+id/circleView"
         android:layout_margin="8dp"
-        android:background="@drawable/shape_circle_green"/>
+        android:background="@drawable/ic_logo"/>
 
     <LinearLayout
         android:id="@+id/textviews"

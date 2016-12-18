@@ -27,7 +27,8 @@
                 android:value="com.software.rmh.friends.MainActivity"/>
         </activity>
         <activity
-            android:name=".SplashScreen">
+            android:name=".SplashScreen"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
