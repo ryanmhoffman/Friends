@@ -1,7 +1,10 @@
 package com.software.rmh.friends;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,9 +19,11 @@ import java.util.ArrayList;
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.RecyclerViewHolder>{
 
 	private ArrayList<Contact> contacts;
+	private static Context context;
 
-	public RecyclerViewAdapter(ArrayList<Contact> contacts){
+	public RecyclerViewAdapter(ArrayList<Contact> contacts, Context context){
 		this.contacts = contacts;
+		this.context = context;
 	}
 
 	public static class RecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
@@ -39,7 +44,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 			bundle.putString("NAME", contactName.getText().toString());
 			bundle.putString("NUMBER", contactNumber.getText().toString());
 			intent.putExtras(bundle);
-			v.getContext().startActivity(intent);
+			ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context, contactName, "NAME");
+			v.getContext().startActivity(intent, options.toBundle());
 		}
 	}
 

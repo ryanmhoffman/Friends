@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
 		recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
 		layoutManager = new LinearLayoutManager(this);
 		recyclerView.setLayoutManager(layoutManager);
-		adapter = new RecyclerViewAdapter(retriever.retrieveContacts());
+		adapter = new RecyclerViewAdapter(retriever.retrieveContacts(), this);
 		recyclerView.setAdapter(adapter);
 
 		// Add a divider between each row in the RecyclerView.
