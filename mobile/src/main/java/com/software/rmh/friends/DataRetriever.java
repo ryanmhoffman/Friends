@@ -4,7 +4,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract;
-import android.util.Log;
 
 import java.util.ArrayList;
 /**
@@ -64,6 +63,14 @@ public class DataRetriever {
 		return contacts;
 	}
 
+	/**
+	 * Takes a phone number as a String, gets the last sms text message received from that number and returns it as a String.
+	 * The number can be sent in any format, as long as there are seven digits. The number will be extracted into raw format,
+	 * so that there will be no hyphens, parenthesis, or spaces.
+	 *
+	 * @param number The phone number of the contact to retrieve the last text from.
+	 * @return String
+	 */
 	public String retrieveTexts(String number){
 		String message = "";
 		// Convert the phone number to digits only. ie if it's (330)555-1234 convert it to 3305551234
@@ -79,7 +86,6 @@ public class DataRetriever {
 			do {
 				// Set message equal to the "body" of the last received text.
 				message += cursor.getString(cursor.getColumnIndex("body"));
-				Log.d("LAST TEXT", cursor.getString(cursor.getColumnIndex("body")));
 			// There should only be 1 value... might remove this later.
 			} while(cursor.moveToNext());
 		} catch(Exception e){
