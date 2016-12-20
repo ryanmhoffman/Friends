@@ -50,7 +50,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 			bundle.putString("NAME", contactName.getText().toString());
 			bundle.putString("NUMBER", contactNumber.getText().toString());
 			intent.putExtras(bundle);
-			ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context, contactName, "NAME");
+			ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context);
 			v.getContext().startActivity(intent, options.toBundle());
 		}
 	}
