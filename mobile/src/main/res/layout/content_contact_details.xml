@@ -34,7 +34,7 @@
                 android:id="@+id/contentCircleView"
                 android:layout_width="125dp"
                 android:layout_height="125dp"
-                android:background="@drawable/shape_circle"
+                android:background="@drawable/shape_circle_blue"
                 android:layout_marginTop="8dp"
                 android:elevation="6dp"
                 android:gravity="center"

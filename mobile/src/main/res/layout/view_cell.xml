@@ -10,7 +10,8 @@
         android:layout_width="60dp"
         android:id="@+id/circleView"
         android:layout_margin="8dp"
-        android:background="@drawable/ic_logo"/>
+        android:background="@drawable/shape_circle_blue"
+        android:src="@drawable/ic_person"/>
 
     <LinearLayout
         android:id="@+id/textviews"
