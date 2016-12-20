@@ -1,7 +1,6 @@
 package com.software.rmh.friends;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,11 +8,9 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
 
-	private FloatingActionButton fab;
 	private RecyclerView recyclerView;
 	private RecyclerView.LayoutManager layoutManager;
 	private RecyclerViewAdapter adapter;
@@ -64,15 +61,6 @@ public class MainActivity extends AppCompatActivity {
 		// Add a divider between each row in the RecyclerView.
 		DividerItemDecoration divider = new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL);
 		recyclerView.addItemDecoration(divider);
-
-		// Initializes the FloatingActionButton
-		fab = (FloatingActionButton) findViewById(R.id.fab);
-		fab.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-
-			}
-		});
 	}
 
 }
