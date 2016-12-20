@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -61,6 +62,12 @@ public class MainActivity extends AppCompatActivity {
 		// Add a divider between each row in the RecyclerView.
 		DividerItemDecoration divider = new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL);
 		recyclerView.addItemDecoration(divider);
+
+		// If the recyclerView is empty, tell them to go star some contacts.
+		if(adapter.getItemCount() == 0){
+			TextView error = (TextView) findViewById(R.id.errorMessage);
+			error.setText("Uh-oh, you have no starred contacts :(\n You can go star some of your favorites now and they will show up here!");
+		}
 	}
 
 }
