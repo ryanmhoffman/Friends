@@ -2,14 +2,19 @@ package com.software.rmh.friends;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
+import android.view.View;
+import android.widget.Button;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -17,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
 	private RecyclerView.LayoutManager layoutManager;
 	private RecyclerViewAdapter adapter;
 	private DataRetriever retriever;
+	private ArrayList<Contact> contacts;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
 		retriever = new DataRetriever(this);
+		contacts = retriever.retrieveContacts();
 
 		initViews();
 
@@ -53,12 +60,24 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+	@Override
+	protected void onPause() {
+		super.onPause();
+		recyclerView.setAdapter(null);
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		initViews();
+	}
+
 	private void initViews(){
 		// Initializes the RecyclerView and sets the LayoutManager and Adapter.
 		recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
 		layoutManager = new LinearLayoutManager(this);
 		recyclerView.setLayoutManager(layoutManager);
-		adapter = new RecyclerViewAdapter(retriever.retrieveContacts(), this);
+		adapter = new RecyclerViewAdapter(contacts, this);
 		recyclerView.setAdapter(adapter);
 
 		// Add a divider between each row in the RecyclerView.
@@ -67,9 +86,23 @@ public class MainActivity extends AppCompatActivity {
 
 		// If the recyclerView is empty, tell them to go star some contacts.
 		if(adapter.getItemCount() == 0){
-			TextView error = (TextView) findViewById(R.id.errorMessage);
-			error.setText("Uh-oh, you have no starred contacts :(\n You can go star some of your favorites now and they will show up here!");
+			setIntroCardView();
 		}
+	}
+
+	private void setIntroCardView(){
+		final CardView cardView = (CardView) findViewById(R.id.introCardView);
+		cardView.setVisibility(View.VISIBLE);
+
+		Button button = (Button) findViewById(R.id.intro_button);
+		button.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				startActivity(new Intent(Intent.ACTION_VIEW, ContactsContract.Contacts.CONTENT_URI));
+				cardView.setVisibility(View.GONE);
+				onPause();
+			}
+		});
 	}
 
 }

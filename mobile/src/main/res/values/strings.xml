@@ -4,4 +4,6 @@
     <string name="title_activity_contact_details">Contact Details</string>
     <string name="call_button">Call</string>
     <string name="message_button">Message</string>
+    <string name="intro_text">You don\'t have any starred contacts. Try going to the main Contacts app and starring some of your favorites!</string>
+    <string name="button_text">Sure</string>
 </resources>

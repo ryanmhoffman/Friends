@@ -31,12 +31,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="?attr/actionBarSize" />
 
-        <TextView
-            android:id="@+id/errorMessage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:textSize="32sp"/>
+        <include layout="@layout/intro_card_view" />
 
 </android.support.design.widget.CoordinatorLayout>
