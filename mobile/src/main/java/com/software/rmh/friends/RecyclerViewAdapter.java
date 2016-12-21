@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.content.ContextCompat;
@@ -12,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -34,12 +36,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 		public TextView contactName;
 		public TextView contactNumber;
 		public ImageView contactPhoto;
+		public LinearLayout container;
 		public RecyclerViewHolder(View itemView) {
 			super(itemView);
 			itemView.setOnClickListener(this);
 			contactName = (TextView) itemView.findViewById(R.id.contactName);
 			contactNumber = (TextView) itemView.findViewById(R.id.contactNumber);
 			contactPhoto = (ImageView) itemView.findViewById(R.id.circleView);
+			container = (LinearLayout) itemView.findViewById(R.id.container);
 		}
 
 		@Override
@@ -53,6 +57,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 			ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context);
 			v.getContext().startActivity(intent, options.toBundle());
 		}
+
 	}
 
 
@@ -67,9 +72,19 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 	@Override
 	public void onBindViewHolder(RecyclerViewHolder holder, int position) {
 		if(contacts.get(position) != null){
+			final int i = position;
 			holder.contactName.setText(contacts.get(position).getNAME());
 			holder.contactNumber.setText(contacts.get(position).getNUMBER());
 			holder.contactPhoto.setBackground(getRandomColor());
+			holder.container.setOnLongClickListener(new View.OnLongClickListener() {
+				@Override
+				public boolean onLongClick(View view) {
+					Intent call = new Intent(Intent.ACTION_DIAL);
+					call.setData(Uri.parse("tel:" + contacts.get(i).getNUMBER()));
+					view.getContext().startActivity(call);
+					return true;
+				}
+			});
 		}
 	}
 
