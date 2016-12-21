@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -77,6 +78,12 @@ public class MainActivity extends AppCompatActivity {
 		recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
 		layoutManager = new LinearLayoutManager(this);
 		recyclerView.setLayoutManager(layoutManager);
+		java.util.Collections.sort(contacts, new Comparator<Contact>() {
+			@Override
+			public int compare(Contact contact1, Contact contact2) {
+				return contact1.getNAME().compareTo(contact2.getNAME());
+			}
+		});
 		adapter = new RecyclerViewAdapter(contacts, this);
 		recyclerView.setAdapter(adapter);
 
