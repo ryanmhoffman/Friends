@@ -25,7 +25,7 @@ import java.util.Random;
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.RecyclerViewHolder>{
 
 	private ArrayList<Contact> contacts;
-	private static Context context;
+	private Context context;
 
 	public RecyclerViewAdapter(ArrayList<Contact> contacts, Context context){
 		this.contacts = contacts;
@@ -54,7 +54,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 			bundle.putString("NAME", contactName.getText().toString());
 			bundle.putString("NUMBER", contactNumber.getText().toString());
 			intent.putExtras(bundle);
-			ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context);
+			ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) v.getContext());
 			v.getContext().startActivity(intent, options.toBundle());
 		}
 
