@@ -1,8 +1,12 @@
 package com.software.rmh.friends;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -17,17 +21,22 @@ public class ContactDetails extends AppCompatActivity {
 
 	private TextView circleView, nameText, lastText;
 	private FabOptions fab;
+	private String name;
+	private String number;
+
+	private static final int REQUEST_CALL_PHONE = 42;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_contact_details);
-		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-		setSupportActionBar(toolbar);
+		setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
 
 		// Retrieve the Extra data from the intent.
-		String name = getIntent().getStringExtra("NAME");
-		final String number = getIntent().getStringExtra("NUMBER");
+		if(getIntent() != null) {
+			name = getIntent().getStringExtra("NAME");
+			number = getIntent().getStringExtra("NUMBER");
+		}
 
 		circleView = (TextView) findViewById(R.id.contentCircleView);
 
@@ -38,33 +47,71 @@ public class ContactDetails extends AppCompatActivity {
 		lastText.setText(new DataRetriever(this).retrieveTexts(number));
 
 		setInitials(name);
-
-		fab = (FabOptions) findViewById(R.id.fabOptions);
-		animateFAB();
-		fab.setButtonsMenu(this, R.menu.menu);
-
-		fab.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				switch(view.getId()) {
-					case R.id.menu_call:
-						Intent call = new Intent(Intent.ACTION_DIAL);
-						call.setData(Uri.parse("tel:" + number));
-						startActivity(call);
-						break;
-					case R.id.menu_text:
-						Intent text = new Intent(Intent.ACTION_VIEW);
-						text.setData(Uri.parse("sms:" + number));
-						startActivity(text);
-						break;
-					default:
-						// No default case needed.
-				}
-			}
-		});
+		initializeFAB();
 
 		// Enable the back button
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item){
+		switch(item.getItemId()){
+			case android.R.id.home:
+				supportFinishAfterTransition();
+				return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+
+	/**
+	 * On Marshmallow and above, request permission at runtime to make the phone call directly from the app.
+	 */
+	private void checkPermission(){
+		int checkPermission = ContextCompat.checkSelfPermission(this, android.Manifest.permission.CALL_PHONE);
+		if(checkPermission != PackageManager.PERMISSION_GRANTED){
+			ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.CALL_PHONE}, REQUEST_CALL_PHONE);
+		}
+	}
+
+	@Override
+	public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults){
+		switch(requestCode){
+			case REQUEST_CALL_PHONE:
+				if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+					// Permission granted, make the phone call.
+					call();
+				} else {
+					// Permission denied, only dial the number instead.
+					dial();
+				}
+		}
+	}
+
+	/**
+	 * If user denies permission to call directly, this will use the allowed dial only permission.
+	 */
+	private void dial(){
+		Intent call = new Intent(Intent.ACTION_DIAL);
+		call.setData(Uri.parse("tel:" + number));
+		startActivity(call);
+	}
+
+	/**
+	 * If user grants permission to call we place the call directly.
+	 */
+	private void call(){
+		Intent call = new Intent(Intent.ACTION_CALL);
+		call.setData(Uri.parse("tel:" + number));
+		startActivity(call);
+	}
+
+	/**
+	 * Open the default contacts app to the selected contact's conversation.
+	 */
+	private void text(){
+		Intent text = new Intent(Intent.ACTION_VIEW);
+		text.setData(Uri.parse("sms:" + number));
+		startActivity(text);
 	}
 
 	/**
@@ -105,14 +152,28 @@ public class ContactDetails extends AppCompatActivity {
 		}
 	}
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item){
-		switch(item.getItemId()){
-			case android.R.id.home:
-				supportFinishAfterTransition();
-				return true;
-		}
-		return super.onOptionsItemSelected(item);
+	private void initializeFAB(){
+		fab = (FabOptions) findViewById(R.id.fabOptions);
+		animateFAB();
+		fab.setButtonsMenu(this, R.menu.menu);
+
+		fab.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				switch(view.getId()) {
+					case R.id.menu_call:
+						if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+							checkPermission();
+						} else {
+							call();
+						}
+						break;
+					case R.id.menu_text:
+						text();
+						break;
+				}
+			}
+		});
 	}
 
 	private void animateFAB(){
