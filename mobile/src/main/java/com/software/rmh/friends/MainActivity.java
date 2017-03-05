@@ -28,8 +28,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
 
 		retriever = new DataRetriever(this);
 		contacts = retriever.retrieveContacts();
@@ -64,12 +63,14 @@ public class MainActivity extends AppCompatActivity {
 	@Override
 	protected void onPause() {
 		super.onPause();
+		// Clear everything from the RecyclerView.
 		recyclerView.setAdapter(null);
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
+		// Reload the RecyclerView.
 		initViews();
 	}
 
@@ -78,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
 		recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
 		layoutManager = new LinearLayoutManager(this);
 		recyclerView.setLayoutManager(layoutManager);
+		// Sort the contacts alphabetically.
 		java.util.Collections.sort(contacts, new Comparator<Contact>() {
 			@Override
 			public int compare(Contact contact1, Contact contact2) {
@@ -88,8 +90,7 @@ public class MainActivity extends AppCompatActivity {
 		recyclerView.setAdapter(adapter);
 
 		// Add a divider between each row in the RecyclerView.
-		DividerItemDecoration divider = new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL);
-		recyclerView.addItemDecoration(divider);
+		recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
 
 		// If the recyclerView is empty, tell them to go star some contacts.
 		if(adapter.getItemCount() == 0){
@@ -97,6 +98,13 @@ public class MainActivity extends AppCompatActivity {
 		}
 	}
 
+	/**
+	 * When the app is opened and there are no starred contacts this displays a card to the user
+	 * prompting them to go into the main contacts app and star their favorite contacts.
+	 *
+	 * It also lets you click a button that takes the user directly to the main contacts app so they
+	 * don't have to search their phone for it.
+	 */
 	private void setIntroCardView(){
 		final CardView cardView = (CardView) findViewById(R.id.introCardView);
 		cardView.setVisibility(View.VISIBLE);
